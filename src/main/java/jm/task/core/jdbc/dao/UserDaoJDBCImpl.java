@@ -33,18 +33,23 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(String.format("INSERT INTO user(name, last_name, age) VALUES('%s', '%s', %d);", name, lastName, age));
+        String query = "INSERT INTO user(name, last_name, age) VALUES(?, ?, ?);";
+        try (PreparedStatement preparedSt = connection.prepareStatement(query)) {
+            preparedSt.setString(1, name);
+            preparedSt.setString(2, lastName);
+            preparedSt.setByte(3, age);
+            preparedSt.executeUpdate();
         } catch (SQLException ex) {
-
+            ex.printStackTrace();
         }
     }
 
     public void removeUserById(long id) {
+        String query = "DELETE FROM user WHERE id=?";
         try (Statement statement = connection.createStatement()) {
-            statement.execute(String.format("DELETE FROM user WHERE id=%d", id));
+            statement.execute(query);
         } catch (SQLException ex) {
-
+            ex.printStackTrace();
         }
     }
 

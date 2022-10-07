@@ -14,6 +14,5 @@ public class Main {
         users.saveUser("Marina", "Semenova", (byte) 40);
         users.saveUser("Alina", "Mennikova", (byte) 20);
         System.out.println(users.getAllUsers());
-        users.dropUsersTable();
     }
 }
